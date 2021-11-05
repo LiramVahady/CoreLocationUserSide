@@ -49,14 +49,14 @@ class ViewController: UIViewController {
     
     private func centerViewOnUserLocation(){
         
-        databaseService.fetchCurrentCoordinates { dict in
-            print(dict)
+        databaseService.fetchCurrentCoordinates { [weak self] dict in
+            
             if let long = dict["long"] as? Double,
                let lat = dict["lat"] as? Double{
-                self.currentLongt = long
-                self.currentLat = lat
-                let customLocation =  MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: self.currentLat, longitude: self.currentLongt), latitudinalMeters: self.regionMeters, longitudinalMeters: self.regionMeters)
-                    self.mapView.setRegion(customLocation, animated: true)
+                self?.currentLongt = long
+                self?.currentLat = lat
+                let customLocation =  MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: self?.currentLat ?? 0, longitude: self?.currentLongt ?? 0), latitudinalMeters: self?.regionMeters ?? 0, longitudinalMeters: self?.regionMeters ?? 0)
+                    self?.mapView.setRegion(customLocation, animated: true)
              
             }
         }
